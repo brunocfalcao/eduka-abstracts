@@ -39,6 +39,14 @@ abstract class EdukaCommand extends Command
         });
     }
 
+    /**
+     * Console prompt, but enpowered with rules.
+     *
+     * @param string $question
+     * @param string $rules
+     *
+     * @return mixed
+     */
     protected function askWithRules(string $question, string $rules)
     {
         $exit = false;

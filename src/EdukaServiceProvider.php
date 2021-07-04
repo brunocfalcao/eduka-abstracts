@@ -2,20 +2,27 @@
 
 namespace Eduka\Abstracts;
 
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Eduka\Analytics\Middleware\IpTracing;
+use Eduka\Analytics\Middleware\GoalsTracing;
+use Eduka\Analytics\Middleware\VisitTracing;
 
 abstract class EdukaServiceProvider extends ServiceProvider
 {
-    /**
-     * Loads/reloads the eduka hint namespace. It is used to, by default
-     * load the eduka nereus namespace, but in case there is a course
-     * loaded, then it will override the eduka namespace and use the
-     * course namespace.
-     *
-     * @return void
-     */
-    protected function loadEdukaViews(string $namespace)
+    protected function customViewNamespace(string $namespace, string $alias)
     {
-        view()->getFinder()->replaceNamespace('eduka', $namespace);
+        view()->getFinder()->replaceNamespace($alias, $namespace);
+    }
+
+    protected function extraRoutes(string $path)
+    {
+        Route::middleware(['web',
+               IpTracing::class,
+               VisitTracing::class,
+               GoalsTracing::class, ])
+             ->group(function () use ($path) {
+                 include $path;
+             });
     }
 }
