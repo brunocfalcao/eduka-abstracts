@@ -2,11 +2,11 @@
 
 namespace Eduka\Abstracts;
 
+use Eduka\Analytics\Middleware\GoalsTracing;
+use Eduka\Analytics\Middleware\IpTracing;
+use Eduka\Analytics\Middleware\VisitTracing;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
-use Eduka\Analytics\Middleware\IpTracing;
-use Eduka\Analytics\Middleware\GoalsTracing;
-use Eduka\Analytics\Middleware\VisitTracing;
 
 abstract class EdukaServiceProvider extends ServiceProvider
 {

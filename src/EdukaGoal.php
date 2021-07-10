@@ -2,9 +2,9 @@
 
 namespace Eduka\Abstracts;
 
+use Eduka\Analytics\Models\Visit as VisitModel;
 use Eduka\Analytics\Services\Visit;
 use Eduka\Analytics\Services\Visitor;
-use Eduka\Analytics\Models\Visit as VisitModel;
 
 abstract class EdukaGoal
 {
