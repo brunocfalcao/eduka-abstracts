@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-abstract class EdukaMailable extends Mailable implements ShouldQueue
+class EdukaMailable extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -18,16 +18,6 @@ abstract class EdukaMailable extends Mailable implements ShouldQueue
      */
     public function __construct()
     {
-        //
-    }
-
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        return $this->view('view.name');
+        info('called?');
     }
 }
