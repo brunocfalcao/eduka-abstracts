@@ -22,6 +22,9 @@ class EdukaMailable extends Mailable implements ShouldQueue
     public function __construct(array $data = [])
     {
         $this->data = $data;
+
+        // Not the best approach since we are serializing the course instance.
+        // Should serialize only the course id.
         $this->course = course();
     }
 
