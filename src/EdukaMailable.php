@@ -11,6 +11,8 @@ class EdukaMailable extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
+    protected $provider;
+
     /**
      * Create a new message instance.
      *
@@ -18,6 +20,6 @@ class EdukaMailable extends Mailable implements ShouldQueue
      */
     public function __construct()
     {
-        info('called?');
+        $this->provider = course()->provider_namespace;
     }
 }
