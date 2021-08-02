@@ -30,7 +30,7 @@ class EdukaMailable extends Mailable implements ShouldQueue
 
     public function build()
     {
-        /**
+        /*
          * Register the respective course service provider. Since this is a job
          * we need to statically record that information since it runs as a
          * console so no course service provider context will be automatically
