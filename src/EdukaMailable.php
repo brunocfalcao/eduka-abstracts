@@ -11,15 +11,32 @@ class EdukaMailable extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
-    protected $provider;
+    protected $course;
+    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(array $data = [])
     {
-        $this->provider = course()->provider_namespace;
+        $this->data = $data;
+        $this->course = course();
+    }
+
+    public function build()
+    {
+        /**
+         * Register the respective course service provider. Since this is a job
+         * we need to statically record that information since it runs as a
+         * console so no course service provider context will be automatically
+         * initialized by eduka nereus.
+         *
+         * If the mailable is from the backend, then there is no need to
+         * register a service provider, since it's already automatically
+         * registered.
+         */
+        app()->register($this->course->provider_namespace);
     }
 }
