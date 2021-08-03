@@ -2,6 +2,7 @@
 
 namespace Eduka\Abstracts;
 
+use Eduka\Analytics\Models\Goal;
 use Eduka\Analytics\Models\Visit as VisitModel;
 use Eduka\Analytics\Services\Visit;
 use Eduka\Analytics\Services\Visitor;
@@ -11,6 +12,8 @@ abstract class EdukaGoal
     protected $visit = null;
     protected $visits = null;
     protected $goal = null;
+    protected $attributes = [];
+    protected $context = null;
 
     public function __invoke()
     {
@@ -38,7 +41,14 @@ abstract class EdukaGoal
 
     public function setGoal()
     {
-        $this->visit->goal_achieved = $this->goal;
+        $goal = Goal::create([
+            'name' => $this->goal,
+            'description' => '',
+            'attributes' => $this->attributes
+        ]);
+
+        // Save the goal reference in the visit instance.
+        $this->visit->goal_id = $goal->id;
         $this->visit->save();
     }
 }
