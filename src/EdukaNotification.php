@@ -11,6 +11,8 @@ class EdukaNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
+    protected $course;
+
     /**
      * Create a new notification instance.
      *
@@ -18,7 +20,9 @@ class EdukaNotification extends Notification implements ShouldQueue
      */
     public function __construct()
     {
-        //
+        // Not the best approach since we are serializing the course instance.
+        // Should serialize only the course id.
+        $this->course = course();
     }
 
     /**
