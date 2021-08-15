@@ -2,6 +2,7 @@
 
 namespace Eduka\Abstracts;
 
+use Eduka\Pathfinder\Pathfinder;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
@@ -11,17 +12,21 @@ class EdukaNotification extends Notification implements ShouldQueue
     use Queueable;
 
     protected $course;
+    protected $data;
+    protected $mailableClass;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(string $configPath, array $data = [])
     {
         // Not the best approach since we are serializing the course instance.
         // Should serialize only the course id.
         $this->course = course();
+        $this->data = $data;
+        $this->mailableClass = config_course($configPath);
     }
 
     /**
@@ -43,7 +48,14 @@ class EdukaNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
-        //
+        Pathfinder::contextualize($this->course);
+
+        // Send a "thank you for subscribing" notification.
+        return (new $this->mailableClass([
+            'notifiable' => $notifiable,
+            'data' => $this->data,
+            'course' => $this->course, ]))
+                        ->to($notifiable->email);
     }
 
     /**
