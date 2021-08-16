@@ -25,9 +25,19 @@ class EdukaNotification extends Notification implements ShouldQueue
         // Not the best approach since we are serializing the course instance.
         // Should serialize only the course id.
         $this->course = course();
-        info($this->course->name);
+        info($this->url());
         $this->data = $data;
         $this->mailableClass = config_course($configPath);
+    }
+
+    private function url()
+    {
+        return sprintf(
+            "%s://%s%s",
+            isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'off' ? 'https' : 'http',
+            $_SERVER['SERVER_NAME'],
+            $_SERVER['REQUEST_URI']
+        );
     }
 
     /**
