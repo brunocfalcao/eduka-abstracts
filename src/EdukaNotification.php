@@ -25,14 +25,6 @@ class EdukaNotification extends Notification implements ShouldQueue
         // Not the best approach since we are serializing the course instance.
         // Should serialize only the course id.
         $this->course = course();
-
-        /**
-         * For persistency reasons we need to persist the source url.
-         * Since the notification runs in an assyncronous queue, it will not
-         * know what was the source course url that it came from.
-         */
-        $this->url = url();
-
         $this->data = $data;
         $this->mailableClass = config_course($configPath);
     }
