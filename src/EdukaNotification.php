@@ -26,6 +26,7 @@ class EdukaNotification extends Notification implements ShouldQueue
         // Should serialize only the course id.
         $this->course = course();
         $this->data = $data;
+        $this->url = url('/');
         $this->mailableClass = config_course($configPath);
     }
 
@@ -54,7 +55,7 @@ class EdukaNotification extends Notification implements ShouldQueue
         return (new $this->mailableClass([
             'notifiable' => $notifiable,
             'data' => $this->data,
-            'url' => url('/'),
+            'url' => $this->url,
             'course' => $this->course, ]))
                         ->to($notifiable->email);
     }
