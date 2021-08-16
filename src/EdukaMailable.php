@@ -31,6 +31,7 @@ class EdukaMailable extends Mailable
         )
                     ->with('notifiable', $this->data['notifiable'])
                     ->with('data', $this->data['data'])
+                    ->with('url', $this->data['url'])
                     ->with('course', $this->data['course'])
                     ->view($this->targetView);
     }

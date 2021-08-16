@@ -54,6 +54,7 @@ class EdukaNotification extends Notification implements ShouldQueue
         return (new $this->mailableClass([
             'notifiable' => $notifiable,
             'data' => $this->data,
+            'url' => url('/'),
             'course' => $this->course, ]))
                         ->to($notifiable->email);
     }
