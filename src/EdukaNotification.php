@@ -13,6 +13,7 @@ class EdukaNotification extends Notification implements ShouldQueue
 
     protected $course;
     protected $data;
+    protected $url;
     protected $mailableClass;
 
     /**
