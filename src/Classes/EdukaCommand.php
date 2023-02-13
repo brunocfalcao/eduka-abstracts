@@ -30,4 +30,15 @@ abstract class EdukaCommand extends Command
             $this->output->write($line);
         });
     }
+
+    protected function paragraph($text, $endlf = true, $startlf = true)
+    {
+        if ($startlf) {
+            $this->info('');
+        }
+        $this->info($text);
+        if ($endlf) {
+            $this->info('');
+        }
+    }
 }
