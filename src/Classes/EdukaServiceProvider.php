@@ -9,6 +9,13 @@ class EdukaServiceProvider extends ServiceProvider
 {
     protected $dir;
 
+    public function boot()
+    {
+        $this->overrideResources();
+
+        $this->registerCommands();
+    }
+
     /**
      * Overrides all the published resources on the base path. Useful to
      * have a laravel folder structure inside the "overrides" folder and
@@ -39,13 +46,6 @@ class EdukaServiceProvider extends ServiceProvider
              ->group(function () use ($path) {
                  include $path;
              });
-    }
-
-    public function boot()
-    {
-        $this->overrideResources();
-
-        $this->registerCommands();
     }
 
     protected function registerCommands()
