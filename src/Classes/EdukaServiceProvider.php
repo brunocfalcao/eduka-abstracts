@@ -2,7 +2,9 @@
 
 namespace Eduka\Abstracts\Classes;
 
+use Eduka\Nereus\Facades\Nereus;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
 
 class EdukaServiceProvider extends ServiceProvider
@@ -13,7 +15,13 @@ class EdukaServiceProvider extends ServiceProvider
     {
         $this->overrideResources();
 
-        $this->registerCommands();
+        if (Nereus::course()) {
+            Vite::macro('image', fn (string $asset) => $this->asset("resources/assets/images/{$asset}"));
+            Vite::useBuildDirectory('vendor/' . Nereus::course()->canonical);
+            $this->customViewNamespace($this->dir . '/../resources/views', 'course');
+        }
+
+        $this->loadMigrationsFrom($this->dir . '/../database/migrations');
     }
 
     /**
@@ -21,8 +29,6 @@ class EdukaServiceProvider extends ServiceProvider
      * have a laravel folder structure inside the "overrides" folder and
      * then they will override any file path that is defined inside that
      * folder.
-     *
-     * @return void
      */
     protected function overrideResources()
     {
@@ -31,11 +37,22 @@ class EdukaServiceProvider extends ServiceProvider
         ]);
     }
 
+    /**
+     * Replaces the current alias namespace with a new target path.
+     * @param  string $namespace
+     * @param  string $alias
+     * @return void
+     */
     protected function customViewNamespace(string $namespace, string $alias)
     {
         view()->getFinder()->replaceNamespace($alias, $namespace);
     }
 
+    /**
+     * Loads extra routes, if needed.
+     * @param  string $path
+     * @return void
+     */
     protected function extraRoutes(string $path)
     {
         Route::middleware(['web'])
@@ -44,7 +61,7 @@ class EdukaServiceProvider extends ServiceProvider
              });
     }
 
-    protected function registerCommands()
+    public function register()
     {
     }
 }
