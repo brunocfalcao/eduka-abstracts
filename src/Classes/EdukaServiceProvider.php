@@ -17,11 +17,15 @@ class EdukaServiceProvider extends ServiceProvider
 
         if (Nereus::course()) {
             Vite::macro('image', fn (string $asset) => $this->asset("resources/assets/images/{$asset}"));
-            Vite::useBuildDirectory('vendor/' . Nereus::course()->canonical);
-            $this->customViewNamespace($this->dir . '/../resources/views', 'course');
+            Vite::useBuildDirectory('vendor/'.Nereus::course()->canonical);
+            $this->customViewNamespace($this->dir.'/../resources/views', 'course');
         }
 
-        $this->loadMigrationsFrom($this->dir . '/../database/migrations');
+        $this->loadMigrationsFrom($this->dir.'/../database/migrations');
+    }
+
+    public function register()
+    {
     }
 
     /**
@@ -39,8 +43,7 @@ class EdukaServiceProvider extends ServiceProvider
 
     /**
      * Replaces the current alias namespace with a new target path.
-     * @param  string $namespace
-     * @param  string $alias
+     *
      * @return void
      */
     protected function customViewNamespace(string $namespace, string $alias)
@@ -49,8 +52,8 @@ class EdukaServiceProvider extends ServiceProvider
     }
 
     /**
-     * Loads extra routes, if needed.
-     * @param  string $path
+     * Extra routes loading.
+     *
      * @return void
      */
     protected function extraRoutes(string $path)
@@ -59,9 +62,5 @@ class EdukaServiceProvider extends ServiceProvider
              ->group(function () use ($path) {
                  include $path;
              });
-    }
-
-    public function register()
-    {
     }
 }
