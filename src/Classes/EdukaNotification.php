@@ -14,11 +14,6 @@ class EdukaNotification extends Notification
         //
     }
 
-    public function via($notifiable)
-    {
-        return ['mail'];
-    }
-
     public function toMail($notifiable)
     {
         //

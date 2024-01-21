@@ -62,8 +62,8 @@ class EdukaServiceProvider extends ServiceProvider
     protected function extraRoutes(string $path)
     {
         Route::middleware(['web'])
-             ->group(function () use ($path) {
-                 include $path;
-             });
+            ->group(function () use ($path) {
+                include $path;
+            });
     }
 }
