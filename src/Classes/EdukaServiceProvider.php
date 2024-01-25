@@ -29,6 +29,7 @@ class EdukaServiceProvider extends ServiceProvider
 
     public function register()
     {
+        //
     }
 
     /**
