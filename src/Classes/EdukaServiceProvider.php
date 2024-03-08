@@ -16,9 +16,18 @@ class EdukaServiceProvider extends ServiceProvider
         $this->overrideResources();
 
         if (Nereus::course()) {
+            Vite::macro('resource', function (string $path) {
+                return $this->asset("resources/assets/{$path}");
+            });
+
             Vite::macro('image', function (string $asset) {
                 return $this->asset("resources/assets/images/{$asset}");
             });
+
+            Vite::macro('favicon', function (string $asset) {
+                return $this->asset("resources/assets/favicons/{$asset}");
+            });
+
             Vite::useBuildDirectory('vendor/'.Nereus::course()->canonical);
             $this->customViewNamespace($this->dir.'/../resources/views', 'course');
         }
