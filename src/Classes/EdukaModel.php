@@ -2,7 +2,7 @@
 
 namespace Eduka\Abstracts\Classes;
 
-use Brunocfalcao\LaravelHelpers\Traits\HasCustomQueryBuilder;
+use Brunocfalcao\LaravelHelpers\Traits\ForModels\HasCustomQueryBuilder;
 use Illuminate\Database\Eloquent\Model;
 
 abstract class EdukaModel extends Model
