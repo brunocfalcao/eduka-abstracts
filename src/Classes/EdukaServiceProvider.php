@@ -28,11 +28,14 @@ class EdukaServiceProvider extends ServiceProvider
                 return $this->asset("resources/assets/favicons/{$asset}");
             });
 
-            Vite::useBuildDirectory('vendor/'.Nereus::course()->canonical);
+            Vite::useBuildDirectory('courses/'.Nereus::course()->canonical);
+
             $this->customViewNamespace($this->dir.'/../resources/views', 'course');
         }
 
         $this->loadMigrationsFrom($this->dir.'/../database/migrations');
+
+        $this->loadTranslationsFrom($this->dir.'/../lang', 'course');
     }
 
     public function register()
