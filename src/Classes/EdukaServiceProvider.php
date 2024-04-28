@@ -16,7 +16,7 @@ class EdukaServiceProvider extends ServiceProvider
         $this->overrideResources();
 
         if (Nereus::course()) {
-            Vite::macro('asset', function (string $path) {
+            Vite::macro('file', function (string $path) {
                 return $this->asset("resources/assets/{$path}");
             });
 
