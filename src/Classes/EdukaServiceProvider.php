@@ -3,6 +3,7 @@
 namespace Eduka\Abstracts\Classes;
 
 use Eduka\Nereus\Facades\Nereus;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Vite;
 use Illuminate\Support\ServiceProvider;
@@ -21,19 +22,21 @@ class EdukaServiceProvider extends ServiceProvider
             });
         }
 
+        Blade::anonymousComponentPath($this->dir.'/../resources/views/components');
+
         if (Nereus::course()) {
             Vite::useBuildDirectory('vendor/'.Nereus::course()->canonical);
             $this->customViewNamespace($this->dir.'/../resources/views', 'course');
+            $this->loadTranslationsFrom($this->dir.'/../lang', 'course');
         }
 
         if (Nereus::backend()) {
             Vite::useBuildDirectory('vendor/'.Nereus::backend()->canonical);
             $this->customViewNamespace($this->dir.'/../resources/views', 'backend');
+            $this->loadTranslationsFrom($this->dir.'/../lang', 'backend');
         }
 
         $this->loadMigrationsFrom($this->dir.'/../database/migrations');
-
-        $this->loadTranslationsFrom($this->dir.'/../lang', 'course');
     }
 
     public function register()
