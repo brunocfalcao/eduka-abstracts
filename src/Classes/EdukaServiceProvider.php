@@ -22,7 +22,10 @@ class EdukaServiceProvider extends ServiceProvider
             });
         }
 
-        Blade::anonymousComponentPath($this->dir.'/../resources/views/components');
+        // Load anonymous Blade components, if directory exists
+        if (is_dir($this->dir.'/../resources/views/components')) {
+            Blade::anonymousComponentPath($this->dir.'/../resources/views/components');
+        }
 
         if (Nereus::course()) {
             Vite::useBuildDirectory('vendor/'.Nereus::course()->canonical);
