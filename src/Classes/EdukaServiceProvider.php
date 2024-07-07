@@ -16,24 +16,25 @@ class EdukaServiceProvider extends ServiceProvider
     {
         $this->overrideResources();
 
-        if (Nereus::course() || Nereus::backend()) {
+        if (Nereus::matchCourse() || Nereus::matchBackend()) {
             Vite::macro('file', function (string $path) {
                 return $this->asset("resources/{$path}");
             });
         }
+
 
         // Load anonymous Blade components, if directory exists
         if (is_dir($this->dir.'/../resources/views/components')) {
             Blade::anonymousComponentPath($this->dir.'/../resources/views/components');
         }
 
-        if (Nereus::course()) {
+        if (Nereus::matchCourse()) {
             Vite::useBuildDirectory('vendor/'.Nereus::course()->canonical);
             $this->customViewNamespace($this->dir.'/../resources/views', 'course');
             $this->loadTranslationsFrom($this->dir.'/../lang', 'course');
         }
 
-        if (Nereus::backend()) {
+        if (Nereus::matchBackend()) {
             Vite::useBuildDirectory('vendor/'.Nereus::backend()->canonical);
             $this->customViewNamespace($this->dir.'/../resources/views', 'backend');
             $this->loadTranslationsFrom($this->dir.'/../lang', 'backend');
